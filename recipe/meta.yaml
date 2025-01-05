@@ -5,11 +5,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/n/nteract_on_jupyter/nteract_on_jupyter-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/n/nteract_on_jupyter/nteract_on_jupyter-{{ version }}.tar.gz
   sha256: 3cb096237aeecb60c54e2428d21e08de30cde2d87f1d3890725d1d7991dd8056
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
   entry_points:
@@ -17,13 +17,15 @@ build:
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - notebook
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - nteract_on_jupyter
   commands:
